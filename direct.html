@@ -31,6 +31,17 @@
         height: 100vh;
         pointer-events: none;
     }
+    #mute-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        color: gold;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
     h2 {
         font-size: 24px;
         font-weight: bold;
@@ -63,11 +74,16 @@
 </head>
 <body>
     <div id="fireworks-container"></div>
-    <h2>🎉 congoo!! <br> you r an official AACHCHIII sinceeeee 🎉</h2>
+    <button id="mute-button" onclick="toggleAudio()">🔊</button>
+    <audio id="background-audio" autoplay loop muted>
+        <source src="Duvet by Boa  #lyrics #song #songlyrics #edit #music #viral.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
     </div>
-    <p> now hold on a sec (maybe 15s 🤷), <br> dont exit jhasjkdfs </p>
+    <p> now hold on a sec (maybe 18s 🤷), <br> dont exit jhasjkdfs </p>
     <p id="loading-dots">now hold on a sec (15 secs maybe), im not responsible for ur damn network  </p>
     <script>
         // Fireworks Effect
@@ -77,7 +93,7 @@
             acceleration: 1,
             friction: 0.98,
             gravity: 1,
-            particles: 80,
+            particles: 75,
             trace: 5,
             explosion: 4,
             autoresize: true,
@@ -111,10 +127,23 @@
         }
         loadingAnimation();
 
+        // Mute/Unmute Audio
+        function toggleAudio() {
+            let audio = document.getElementById("background-audio");
+            let button = document.getElementById("mute-button");
+            if (audio.muted) {
+                audio.muted = false;
+                button.innerText = "🔇";
+            } else {
+                audio.muted = true;
+                button.innerText = "🔊";
+            }
+        }
+
         // Redirect to the eCard after 15 seconds
         setTimeout(() => {
-            window.location.href = "https://www.greetingsisland.com/ecard/prernmvfprp2";
-        }, 18000);
+            window.location.href = "https://www.greetingsisland.com/ecard/plzdsbfvi12d";
+        }, 23000);
     </script>
 </body>
 </html>
