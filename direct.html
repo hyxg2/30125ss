@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your eCard</title>
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js/dist/index.umd.js"></script>
     <style>
-    
     body {
-        background-image: url('c4f8d10570952d8d3c652e606f0d8090.jpg');
+        background-image: url('https://raw.githubusercontent.com/hyxg2/013025/main/c4f8d10570952d8d3c652e606f0d8090.jpg');
         background-size: cover;  
         background-position: center center;
         background-attachment: fixed;  
@@ -20,76 +20,85 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        margin: 0;}
-        }
-        h2 {
-            font-size: 24px;
-            font-weight: bold;
-           font-family: 'Palatino',;  
-        }
-        #timer-box {
-            background: rgba(0, 0, 0, 0.5);
-            border: 3px solid gold;
-            padding: 15px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 10px;
-            box-shadow: 0px 0px 10px gold;
-        }
-        #timer {
-            font-size: 22px;
-            font-weight: bold;
-            color: white;
-        }
-        #note {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        #loading-dots {
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-       canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none; /* Prevents blocking clicks */
-    z-index: -1; /* Moves behind all other content */
-    background: transparent; /* Ensures the fireworks don't block other elements */
-}
-
+        margin: 0;
+        position: relative;
+    }
+    #fireworks-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+    }
+    h2 {
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Palatino';  
+    }
+    #timer-box {
+        background: rgba(0, 0, 0, 0.5);
+        border: 3px solid gold;
+        padding: 15px;
+        border-radius: 10px;
+        display: inline-block;
+        margin-top: 10px;
+        box-shadow: 0px 0px 10px gold;
+    }
+    #timer {
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+    #note {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+    #loading-dots {
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
     </style>
 </head>
 <body>
-
+    <div id="fireworks-container"></div>
     <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
     </div>
-  <p>
-    
-  </p>
-  <p> now hold on a sec (maybe 15s 🤷), <br> dont exit jhasjkdfs </p>
-
+    <p> now hold on a sec (maybe 15s 🤷), <br> dont exit jhasjkdfs </p>
     <p id="loading-dots">now hold on a sec (15 secs maybe), im not responsible for ur damn network  </p>
-<script>
+    <script>
+        // Fireworks Effect
+        const container = document.getElementById('fireworks-container');
+        const fireworks = new Fireworks.default(container, { 
+            speed: 2,
+            acceleration: 1.05,
+            friction: 0.98,
+            gravity: 1,
+            particles: 100,
+            trace: 5,
+            explosion: 5,
+            autoresize: true,
+            brightness: { min: 50, max: 100 },
+            decay: { min: 0.01, max: 0.03 }
+        });
+        fireworks.start();
+
         // Timer starting from January 30, 2025, 12:00 AM
         function updateTimer() {
             let now = new Date();
-            let startDate = new Date("2025-01-29T23:59:00");
-
+            let startDate = new Date("2025-01-30T00:00:00");
             let diff = now - startDate;
             let days = Math.floor(diff / (1000 * 60 * 60 * 24));
             let hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
             let minutes = Math.floor((diff / (1000 * 60)) % 60);
             let seconds = Math.floor((diff / 1000) % 60);
-
-            document.getElementById("timer").innerText = 
-                `${days}d ${hours}h ${minutes}m ${seconds}s`
-        };
+            document.getElementById("timer").innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
 
         // Loading Dots Animation
         function loadingAnimation() {
@@ -97,112 +106,15 @@
             let count = 0;
             setInterval(() => {
                 count = (count + 1) % 4;
-               dots.innerText = "im not responsible for ur damn network speedd" + ".".repeat(count)
+                dots.innerText = "im not responsible for ur damn network speeddd" + ".".repeat(count);
             }, 500);
-        };
-
-        window.onload = function() {
-           const canvas = document.getElementById("fireworksCanvas");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let fireworks = [];
-    let particles = [];
-
-    class Firework {
-        constructor(x, y, targetY) {
-            this.x = x;
-            this.y = y;
-            this.targetY = targetY;
-            this.speed = Math.random() * 3 + 3;
-            this.exploded = false;
-            this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
         }
+        loadingAnimation();
 
-        update() {
-            if (!this.exploded) {
-                this.y -= this.speed;
-                if (this.y <= this.targetY) {
-                    this.exploded = true;
-                    this.explode();
-                }
-            }
-        }
-
-        explode() {
-            let numParticles = 30 + Math.random() * 20;
-            for (let i = 0; i < numParticles; i++) {
-                particles.push(new Particle(this.x, this.y, this.color));
-            }
-        }
-
-        draw() {
-            if (!this.exploded) {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-    }
-
-    class Particle {
-        constructor(x, y, color) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            this.size = Math.random() * 4 + 2;
-            this.life = 50 + Math.random() * 50;
-            this.velocityX = (Math.random() - 0.5) * 5;
-            this.velocityY = (Math.random() - 0.5) * 5;
-        }
-
-        update() {
-            this.x += this.velocityX;
-            this.y += this.velocityY;
-            this.life--;
-        }
-
-        draw() {
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-        }
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        fireworks = fireworks.filter(fw => !fw.exploded);
-        particles = particles.filter(p => p.life > 0);
-
-        fireworks.forEach(fw => {
-            fw.update();
-            fw.draw();
-        });
-
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-
-        requestAnimationFrame(animate);
-    }
-
-    function launchFirework() {
-        let x = Math.random() * canvas.width;
-        let targetY = Math.random() * canvas.height * 0.5 + 100;
-        fireworks.push(new Firework(x, canvas.height, targetY));
-    }
-
-    setInterval(launchFirework, 1000);
-    animate();
-        };
+        // Redirect to the eCard after 15 seconds
+        setTimeout(() => {
+            window.location.href = "https://www.greetingsisland.com/ecard/plzdsbfvi12d";
+        }, 15000);
     </script>
-<canvas id="fireworksCanvas"></canvas>
 </body>
 </html>
