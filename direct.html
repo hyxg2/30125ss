@@ -51,10 +51,19 @@
             font-weight: bold;
             margin-top: 5px;
         }
+       /* Fireworks Canvas */
+    canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none; /* Ensures fireworks don’t block button clicks */
+    }
     </style>
 </head>
 <body>
-
+<canvas id="fireworksCanvas"></canvas>
     <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
@@ -123,16 +132,104 @@
         }
 
         window.onload = function() {
-            explodeConfetti(); // Initial Explosion
-            setTimeout(() => fallingConfetti(11000), 500); // Falling Confetti after 0.5s
+           const canvas = document.getElementById("fireworksCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-            setInterval(updateTimer, 1000); // Update timer every second
-            loadingAnimation(); // Start loading dots animation
+    let fireworks = [];
+    let particles = [];
 
-            // Redirect to the eCard after 15 seconds
-            setTimeout(() => {
-                window.location.href = "https://www.greetingsisland.com/ecard/plzdsbfvi12d";
-            }, 15000);
+    class Firework {
+        constructor(x, y, targetY) {
+            this.x = x;
+            this.y = y;
+            this.targetY = targetY;
+            this.speed = Math.random() * 3 + 3;
+            this.exploded = false;
+            this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+        }
+
+        update() {
+            if (!this.exploded) {
+                this.y -= this.speed;
+                if (this.y <= this.targetY) {
+                    this.exploded = true;
+                    this.explode();
+                }
+            }
+        }
+
+        explode() {
+            let numParticles = 30 + Math.random() * 20;
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle(this.x, this.y, this.color));
+            }
+        }
+
+        draw() {
+            if (!this.exploded) {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+    class Particle {
+        constructor(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.size = Math.random() * 4 + 2;
+            this.life = 50 + Math.random() * 50;
+            this.velocityX = (Math.random() - 0.5) * 5;
+            this.velocityY = (Math.random() - 0.5) * 5;
+        }
+
+        update() {
+            this.x += this.velocityX;
+            this.y += this.velocityY;
+            this.life--;
+        }
+
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    function animate() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        fireworks = fireworks.filter(fw => !fw.exploded);
+        particles = particles.filter(p => p.life > 0);
+
+        fireworks.forEach(fw => {
+            fw.update();
+            fw.draw();
+        });
+
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        requestAnimationFrame(animate);
+    }
+
+    function launchFirework() {
+        let x = Math.random() * canvas.width;
+        let targetY = Math.random() * canvas.height * 0.5 + 100;
+        fireworks.push(new Firework(x, canvas.height, targetY));
+    }
+
+    setInterval(launchFirework, 1000);
+    animate();
         };
     </script>
 
