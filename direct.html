@@ -74,14 +74,15 @@
 </head>
 <body>
     <div id="fireworks-container"></div>
-    <button id="mute-button" onclick="toggleAudio()">🔊</button>
-  <audio id="background-audio" autoplay loop>
+    <audio id="background-audio" autoplay loop>
     <source src="duvet.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
+ <button id="mute-button" onclick="toggleAudio()">🔊</button>
+  
 
     
-    <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
+    <h2>🎉 congooo!!! 🎉 <br> you r an official AACHCHIII sinceeeee </h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
     </div>
@@ -130,17 +131,25 @@
         loadingAnimation();
 
         // Mute/Unmute Audio
-        function toggleAudio() {
-            let audio = document.getElementById("duvot.mp3");
-            let button = document.getElementById("mute-button");
-            if (audio.muted) {
-                audio.muted = false;
-                button.innerText = "🔇";
-            } else {
-                audio.muted = true;
-                button.innerText = "🔊";
-            }
+       document.addEventListener("click", () => {
+        let audio = document.getElementById("background-audio");
+        audio.play().catch(error => console.log("Autoplay blocked:", error));
+    }, { once: true }); // Ensures it runs only once
+
+    // Toggle Mute/Unmute
+    function toggleAudio() {
+        let audio = document.getElementById("background-audio"); // Correct ID
+        let button = document.getElementById("mute-button");
+
+        if (audio.muted || audio.paused) {
+            audio.muted = false;
+            audio.play();
+            button.innerText = "🔇"; // Change icon to mute
+        } else {
+            audio.muted = true;
+            button.innerText = "🔊"; // Change icon to unmute
         }
+    }
 
         // Redirect to the eCard after 15 seconds
        setTimeout(() => {
