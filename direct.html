@@ -75,11 +75,12 @@
 <body>
     <div id="fireworks-container"></div>
     <button id="mute-button" onclick="toggleAudio()">🔊</button>
-    document.addEventListener("click", () => {
-    let audio = document.getElementById("duvot.mp3");
-    audio.play().catch(error => console.log("Autoplay blocked:", error));
-}, { once: true });  // Runs only once
+  <audio id="background-audio" autoplay loop>
+    <source src="duvet.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
 
+    
     <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
@@ -130,7 +131,7 @@
 
         // Mute/Unmute Audio
         function toggleAudio() {
-            let audio = document.getElementById("background-audio");
+            let audio = document.getElementById("duvot.mp3");
             let button = document.getElementById("mute-button");
             if (audio.muted) {
                 audio.muted = false;
