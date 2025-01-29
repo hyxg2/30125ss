@@ -50,15 +50,17 @@
             font-weight: bold;
             margin-top: 5px;
         }
-       /* Fireworks Canvas */
-    canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        pointer-events: none; /* Ensures fireworks don’t block button clicks */
-    }
+       canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Prevents blocking clicks */
+    z-index: -1; /* Moves behind all other content */
+    background: transparent; /* Ensures the fireworks don't block other elements */
+}
+
     </style>
 </head>
 <body>
@@ -75,34 +77,7 @@
     <p id="loading-dots">now hold on a sec (15 secs maybe), im not responsible for ur damn network  </p>
 
     <script>
-        // First Confetti Explosion 
-        function explodeConfetti() {
-            confetti({
-                particleCount: 400,
-                spread: 360,
-                startVelocity: 50,
-                ticks: 100000,
-                origin: { x: 0.5, y: 0.5 },
-                shapes: ["circle", "square", "heart"]
-            });
-        }
-
-        // Falling Confetti 
-        function fallingConfetti(duration) {
-            let end = Date.now() + duration;
-            let interval = setInterval(() => {
-                if (Date.now() > end) {
-                    clearInterval(interval);
-                }
-                confetti({
-                    particleCount: 10,
-                    spread: 180,
-                    startVelocity: 10,
-                    gravity: 0.8, 
-                    shapes: ["circle", "square", "heart"],
-                    origin: { x: Math.random(), y: 0 } 
-                });
-            }, 300);
+    
         }
 
         // Timer starting from January 30, 2025, 12:00 AM
@@ -202,7 +177,8 @@
     }
 
     function animate() {
-        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         fireworks = fireworks.filter(fw => !fw.exploded);
