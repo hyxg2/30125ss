@@ -75,9 +75,11 @@
 <body>
     <div id="fireworks-container"></div>
     <button id="mute-button" onclick="toggleAudio()">🔊</button>
-    <audio id="background-audio" autoplay loop muted>
-        <source src="Duvet by Boa  #lyrics #song #songlyrics #edit #music #viral.mp3" type="audio/mp3">
-    </audio>
+    document.addEventListener("click", () => {
+    let audio = document.getElementById("duvot.mp3");
+    audio.play().catch(error => console.log("Autoplay blocked:", error));
+}, { once: true });  // Runs only once
+
     <h2>🎉 you r an official AACHCHIII sinceeeee 🎉</h2>
     <div id="timer-box">
         <p id="timer">Loading...</p>
