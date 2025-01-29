@@ -75,11 +75,7 @@
   <p> now hold on a sec (maybe 15s 🤷), <br> dont exit jhasjkdfs </p>
 
     <p id="loading-dots">now hold on a sec (15 secs maybe), im not responsible for ur damn network  </p>
-
-    <script>
-    
-        }
-
+<script>
         // Timer starting from January 30, 2025, 12:00 AM
         function updateTimer() {
             let now = new Date();
@@ -92,8 +88,8 @@
             let seconds = Math.floor((diff / 1000) % 60);
 
             document.getElementById("timer").innerText = 
-                `${days}d ${hours}h ${minutes}m ${seconds}s`;
-        }
+                `${days}d ${hours}h ${minutes}m ${seconds}s`
+        };
 
         // Loading Dots Animation
         function loadingAnimation() {
@@ -101,9 +97,9 @@
             let count = 0;
             setInterval(() => {
                 count = (count + 1) % 4;
-               dots.innerText = "im not responsible for ur damn network speeddd" + ".".repeat(count);
+               dots.innerText = "im not responsible for ur damn network speedd" + ".".repeat(count)
             }, 500);
-        }
+        };
 
         window.onload = function() {
            const canvas = document.getElementById("fireworksCanvas");
